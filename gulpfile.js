@@ -10,8 +10,8 @@ var gulp = require('gulp'),
     sourceMaps = require('gulp-sourcemaps'),
     spritesmith = require('gulp.spritesmith');
 
-gulp.task('sass', async function () {
-    return gulp.src('app/sass/**/*.scss')
+gulp.task('sass', function () {
+    return gulp.src('app/scss/**/*.scss')
         .pipe(sourceMaps.init())
         .pipe(sass())
         .pipe(autoprefixer(['last 15 versions']))
@@ -65,20 +65,20 @@ gulp.task('clean', async function () {
     return clear.sync('dist')
 });
 
-gulp.task('build', function () {
-    var buildCss = gulp.src('app/css/main.min.css')
+gulp.task('build', async function () {
+    gulp.src('app/css/main.min.css')
         .pipe(gulp.dest('dist/css'));
 
-    var buildFonts = gulp.src('app/fonts/**/*')
+    gulp.src('app/fonts/**/*')
         .pipe(gulp.dest('dist/fonts'));
 
-    var buildJs = gulp.src('app/js/**/*')
+    gulp.src('app/js/**/*')
         .pipe(gulp.dest('dist/js'));
 
-    var buildHtml = gulp.src('app/*.html')
+    gulp.src('app/*.html')
         .pipe(gulp.dest('dist'));
 
-    var buildImg = gulp.src('app/img/**/*')
+    gulp.src('app/img/**/*')
         .pipe(gulp.dest('dist'));
 });
 
@@ -88,4 +88,6 @@ gulp.task('watch', function () {
     gulp.watch('app/js/**/*.js', gulp.parallel('myScripts'));
 });
 
-gulp.task('default', gulp.series('sass', 'scripts', 'myScripts', 'browser-sync', 'watch', 'clean', 'build'));
+gulp.task('rebuild', gulp.series('clean', 'build'));
+
+gulp.task('default', gulp.parallel('sass', 'scripts', 'myScripts', 'browser-sync', 'watch'));
