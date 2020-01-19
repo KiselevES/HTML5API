@@ -13,30 +13,24 @@ $(document).ready(function () {
         }
     });
 
-    $(video).on('timeupdate', function () {
-        var currentTime = video.currentTime,
-            duration = video.duration,
-            elapsedTime = duration - currentTime,
-            minutesLeft = Math.floor(elapsedTime / 60),
-            secondsLeft = Math.floor(elapsedTime - (minutesLeft * 60));
-
-        if (secondsLeft.toString().length === 1) {
-            secondsLeft ="0" + secondsLeft;
+    $(video).on({
+        timeupdate: function () {
+            setTime(video.duration - video.currentTime);
+        },
+        canplay: function () {
+            setTime(video.duration);
         }
-        var timeString = minutesLeft + ':' + secondsLeft;
-        $('.time').text(timeString);
     });
 
-    $(video).on('canplay', function () {
-        var time = video.duration,
-            minutes = Math.floor(time / 60),
-            seconds = Math.floor(time - (minutes * 60));
+    function setTime(time) {
+        let minutesLeft = Math.floor(time / 60),
+            secondsLeft = Math.floor(time - (minutesLeft * 60));
 
-        if( seconds.toString().length ===1){
-            seconds = '0' + seconds;
+        if (secondsLeft.toString().length === 1) {
+            secondsLeft = '0' + secondsLeft;
         }
 
-        timeString = minutes + ":" + seconds;
+        var timeString = minutesLeft + ":" + secondsLeft;
         $('.time').text(timeString);
-    })
+    }
 });
