@@ -1,10 +1,15 @@
-var object = {
-    prop: 'val1',
-    method: function () {
-        return this.prop;
-    }
-};
+$(document).ready(function () {
+    var video = document.querySelector('.video_source');
 
-console.log(object.prop);
-console.log(object['prop']);
-console.log(object.method());
+    $('.play').on('click', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        if(video.paused) {
+            video.play();
+            this.text = '||';
+        } else {
+            video.pause();
+            this.text = '>';
+        }
+    });
+});

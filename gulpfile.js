@@ -83,7 +83,7 @@ gulp.task('build', async function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('app/sass/**/*.scss', gulp.parallel('sass'));
+    gulp.watch('app/scss/**/*.scss', gulp.parallel('sass'));
     gulp.watch('app/*.html', gulp.parallel('code'));
     gulp.watch('app/js/**/*.js', gulp.parallel('myScripts'));
 });
