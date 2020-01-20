@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    var video = document.querySelector('.video_source');
+    let video = document.querySelector('.video_source');
 
     $('.play').on('click', function (e) {
         e.preventDefault();
-        var $this = $(this);
+        let $this = $(this);
         if (video.paused) {
             video.play();
             $this.text('||');
@@ -32,12 +32,21 @@ $(document).ready(function () {
             secondsLeft = '0' + secondsLeft;
         }
 
-        var timeString = minutesLeft + ":" + secondsLeft;
+        let timeString = minutesLeft + ":" + secondsLeft;
         $('.time').text(timeString);
     }
 
     $(video).on('timeupdate', function () {
         let currentPosition = video.currentTime / video.duration * 100;
         $('.progress').css('width', currentPosition + '%');
-    })
+    });
+
+    $('.timeline').on('click', function (e) {
+        let offset = $(this).offset(),
+            relativeX = (e.pageX - offset.left);
+        $('.progress').css('width', relativeX + 'px');
+        let maxProgress = parseInt($('.timeline').css('width')),
+            percent = relativeX / maxProgress * 100;
+        video.currentTime = video.duration * percent / 100;
+    });
 });
