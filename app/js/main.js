@@ -16,6 +16,8 @@ $(document).ready(function () {
     $(video).on({
         timeupdate: function () {
             setTime(video.duration - video.currentTime);
+            let currentPosition = video.currentTime / video.duration * 100;
+            $('.progress').css('width', currentPosition + '%');
         },
         canplay: function () {
             setTime(video.duration);
@@ -33,4 +35,9 @@ $(document).ready(function () {
         var timeString = minutesLeft + ":" + secondsLeft;
         $('.time').text(timeString);
     }
+
+    $(video).on('timeupdate', function () {
+        let currentPosition = video.currentTime / video.duration * 100;
+        $('.progress').css('width', currentPosition + '%');
+    })
 });
